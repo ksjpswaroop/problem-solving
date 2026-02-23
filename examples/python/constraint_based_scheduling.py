@@ -27,13 +27,15 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 
-# Allow direct execution from repository root without package installation.
-REPO_ROOT = Path(__file__).resolve().parents[2]
-SRC_PATH = REPO_ROOT / "src"
-if str(SRC_PATH) not in sys.path:
-    sys.path.insert(0, str(SRC_PATH))
-
-from problemsolving import solve
+try:
+    from problemsolving import solve
+except ModuleNotFoundError:
+    # Allow direct execution from repository root without package installation.
+    REPO_ROOT = Path(__file__).resolve().parents[2]
+    SRC_PATH = REPO_ROOT / "src"
+    if str(SRC_PATH) not in sys.path:
+        sys.path.insert(0, str(SRC_PATH))
+    from problemsolving import solve
 
 
 def run() -> None:

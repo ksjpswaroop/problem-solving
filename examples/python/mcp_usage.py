@@ -29,13 +29,15 @@ import json
 import sys
 from pathlib import Path
 
-# Allow direct execution from repository root without package installation.
-REPO_ROOT = Path(__file__).resolve().parents[2]
-SRC_PATH = REPO_ROOT / "src"
-if str(SRC_PATH) not in sys.path:
-    sys.path.insert(0, str(SRC_PATH))
-
-from problemsolving.mcp.server import dispatch_tool, get_manifest
+try:
+    from problemsolving.mcp.server import dispatch_tool, get_manifest
+except ModuleNotFoundError:
+    # Allow direct execution from repository root without package installation.
+    REPO_ROOT = Path(__file__).resolve().parents[2]
+    SRC_PATH = REPO_ROOT / "src"
+    if str(SRC_PATH) not in sys.path:
+        sys.path.insert(0, str(SRC_PATH))
+    from problemsolving.mcp.server import dispatch_tool, get_manifest
 
 
 def run() -> None:
