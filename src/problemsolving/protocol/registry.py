@@ -1,0 +1,90 @@
+"""Engine registry — register and discover solver engines."""
+
+from __future__ import annotations
+
+from collections.abc import Callable
+from dataclasses import dataclass, field
+from typing import Any
+
+from problemsolving.protocol.request import SolverRequest
+from problemsolving.protocol.response import SolverResponse
+
+
+@dataclass
+class RegisteredEngine:
+    """A registered solver engine."""
+
+    name: str
+    solve_fn: Callable[..., dict[str, Any]]
+    tags: list[str] = field(default_factory=list)
+
+    def handle(self, request: SolverRequest) -> SolverResponse:
+        """Handle a solver request and return a protocol response."""
+        try:
+            result = self.solve_fn(request.input_data)
+            return SolverResponse.success(
+                request_id=request.id or "",
+                engine=self.name,
+                result=result,
+                metadata=result.pop("_metadata", {}),
+                proof_trace=result.pop("_proof_trace", []),
+            )
+        except Exception as e:
+            return SolverResponse.make_error(
+                request_id=request.id or "",
+                engine=self.name,
+                code="SOLVER_ERROR",
+                message=str(e),
+            )
+
+
+class EngineRegistry:
+    """Registry of available solver engines."""
+
+    def __init__(self) -> None:
+        self._engines: dict[str, RegisteredEngine] = {}
+
+    def register(
+        self,
+        name: str,
+        solve_fn: Callable[..., dict[str, Any]],
+        tags: list[str] | None = None,
+    ) -> None:
+        """Register a solver engine."""
+        self._engines[name] = RegisteredEngine(
+            name=name, solve_fn=solve_fn, tags=tags or []
+        )
+
+    def get(self, name: str) -> RegisteredEngine | None:
+        """Get engine by name, or None if not found."""
+        return self._engines.get(name)
+
+    def list_engines(self, tag: str | None = None) -> list[str]:
+        """List registered engine names, optionally filtered by tag."""
+        if tag is None:
+            return list(self._engines.keys())
+        return [
+            name
+            for name, engine in self._engines.items()
+            if tag in engine.tags
+        ]
+
+
+# Global default registry, populated as engines are imported
+_default_registry: EngineRegistry | None = None
+
+
+def get_default_registry() -> EngineRegistry:
+    """Get the default global engine registry."""
+    global _default_registry
+    if _default_registry is None:
+        _default_registry = EngineRegistry()
+        _register_builtin_engines(_default_registry)
+    return _default_registry
+
+
+def _register_builtin_engines(registry: EngineRegistry) -> None:
+    """Register all built-in engines."""
+    from problemsolving.search.bfs import bfs_solve_from_dict
+
+    registry.register("bfs", solve_fn=bfs_solve_from_dict, tags=["search", "pathfinding"])

@@ -1,0 +1,42 @@
+{
+  "id": "bfs",
+  "name": "Breadth-First Search",
+  "category": "search",
+  "subcategory": "uninformed_search",
+  "description": "Finds shortest path (fewest hops) in unweighted graphs by exploring level by level",
+  "when_to_use": [
+    "Unweighted graphs where you need the shortest path by number of edges",
+    "Finding nearest resource/node in a network",
+    "Level-order traversal of trees or graphs",
+    "Maze solving on grids with uniform step cost"
+  ],
+  "when_not_to_use": [
+    "Weighted graphs where edge costs vary (use UCS or A* instead)",
+    "Very deep graphs with solutions far from root (memory-intensive)",
+    "When any path suffices and memory is limited (use DFS instead)"
+  ],
+  "complexity": {
+    "time": "O(V + E) where V = vertices, E = edges",
+    "space": "O(V) — stores all vertices at current frontier"
+  },
+  "parameters": [
+    {"name": "start", "type": "State", "description": "Initial state/node", "required": true},
+    {"name": "goal_test", "type": "Callable", "description": "Returns true if state is the goal", "required": true},
+    {"name": "neighbors", "type": "Callable", "description": "Returns adjacent states for a given state", "required": true}
+  ],
+  "returns": {
+    "type": "SearchResult",
+    "fields": ["path", "nodes_explored"]
+  },
+  "related_algorithms": ["dfs", "ucs", "astar"],
+  "use_cases": [
+    "Shortest hops in social graphs",
+    "Maze solving on uniform grids",
+    "Finding nearest available resource",
+    "Web crawling (breadth-first)"
+  ],
+  "tags": ["search", "pathfinding", "shortest-path", "unweighted", "graph"],
+  "difficulty": "beginner",
+  "python_module": "problemsolving.search.bfs",
+  "embedding_text": "BFS breadth-first search finds the shortest path by number of hops in unweighted graphs. Explores all neighbors at current depth before moving deeper. Guarantees shortest path in unweighted graphs. Use when edges have equal cost and you need minimum hops."
+}
