@@ -1,0 +1,45 @@
+{
+  "id": "astar",
+  "name": "A* Search",
+  "category": "search",
+  "subcategory": "informed_search",
+  "description": "Optimal informed search that combines actual cost g(n) with heuristic estimate h(n). Guarantees optimality when heuristic is admissible.",
+  "when_to_use": [
+    "Weighted graphs with a good admissible heuristic available",
+    "Grid-based pathfinding (Manhattan or Euclidean heuristic)",
+    "Route planning in maps and navigation",
+    "Puzzle solving (e.g. 8-puzzle, 15-puzzle)",
+    "Any problem where you need optimal cost AND have domain knowledge for heuristic"
+  ],
+  "when_not_to_use": [
+    "No reasonable heuristic available (use UCS instead)",
+    "Unweighted graphs (BFS is simpler)",
+    "When speed matters more than optimality (use Greedy Best-First)"
+  ],
+  "complexity": {
+    "time": "O(b^d) worst case, but dramatically better with good heuristic",
+    "space": "O(b^d) — stores all generated nodes"
+  },
+  "parameters": [
+    {"name": "start", "type": "State", "description": "Initial state/node", "required": true},
+    {"name": "goal_test", "type": "Callable", "description": "Returns true if state is the goal", "required": true},
+    {"name": "neighbors", "type": "Callable", "description": "Returns list of (neighbor, cost) tuples", "required": true},
+    {"name": "heuristic", "type": "Callable", "description": "Admissible heuristic: estimated cost to goal", "required": true}
+  ],
+  "returns": {
+    "type": "SearchResult",
+    "fields": ["path", "cost", "nodes_explored"]
+  },
+  "related_algorithms": ["ucs", "greedy", "ida_star", "bfs"],
+  "use_cases": [
+    "GPS navigation and route planning",
+    "Game AI pathfinding",
+    "Sliding puzzle solvers",
+    "Robot motion planning"
+  ],
+  "tags": ["search", "pathfinding", "shortest-path", "weighted", "optimal", "heuristic", "informed"],
+  "difficulty": "intermediate",
+  "python_module": "problemsolving.search.astar",
+  "replaces_cot_for": ["pathfinding", "route_optimization", "puzzle_solving"],
+  "embedding_text": "A* search combines actual path cost g(n) with heuristic estimate h(n) for optimal informed search. Guarantees optimality with admissible heuristic. Best for pathfinding, navigation, puzzles. Evaluates f(n) = g(n) + h(n)."
+}

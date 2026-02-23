@@ -85,6 +85,22 @@ def get_default_registry() -> EngineRegistry:
 
 def _register_builtin_engines(registry: EngineRegistry) -> None:
     """Register all built-in engines."""
+    from problemsolving.search.astar import astar_solve_from_dict
     from problemsolving.search.bfs import bfs_solve_from_dict
+    from problemsolving.search.dfs import dfs_solve_from_dict
+    from problemsolving.search.greedy import greedy_solve_from_dict
+    from problemsolving.search.ucs import ucs_solve_from_dict
 
     registry.register("bfs", solve_fn=bfs_solve_from_dict, tags=["search", "pathfinding"])
+    registry.register("dfs", solve_fn=dfs_solve_from_dict, tags=["search", "pathfinding"])
+    registry.register(
+        "ucs", solve_fn=ucs_solve_from_dict, tags=["search", "pathfinding", "optimal"]
+    )
+    registry.register(
+        "astar",
+        solve_fn=astar_solve_from_dict,
+        tags=["search", "pathfinding", "optimal", "heuristic"],
+    )
+    registry.register(
+        "greedy", solve_fn=greedy_solve_from_dict, tags=["search", "pathfinding", "heuristic"]
+    )

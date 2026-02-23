@@ -1,0 +1,41 @@
+{
+  "id": "ucs",
+  "name": "Uniform Cost Search",
+  "category": "search",
+  "subcategory": "uninformed_search",
+  "description": "Finds the cheapest-cost path in weighted graphs by expanding the least-cost node first.",
+  "when_to_use": [
+    "Weighted graphs where edge costs vary and you need optimal (cheapest) path",
+    "When no heuristic is available but costs matter",
+    "Network routing with varying link costs",
+    "Any shortest-path problem with non-negative edge weights"
+  ],
+  "when_not_to_use": [
+    "Unweighted graphs (BFS is simpler and equivalent)",
+    "When a good heuristic exists (A* is faster)",
+    "Negative edge weights (use Bellman-Ford instead)"
+  ],
+  "complexity": {
+    "time": "O((V + E) log V) with binary heap",
+    "space": "O(V) — stores all vertices in priority queue"
+  },
+  "parameters": [
+    {"name": "start", "type": "State", "description": "Initial state/node", "required": true},
+    {"name": "goal_test", "type": "Callable", "description": "Returns true if state is the goal", "required": true},
+    {"name": "neighbors", "type": "Callable", "description": "Returns list of (neighbor, cost) tuples", "required": true}
+  ],
+  "returns": {
+    "type": "SearchResult",
+    "fields": ["path", "cost", "nodes_explored"]
+  },
+  "related_algorithms": ["bfs", "astar", "dijkstra"],
+  "use_cases": [
+    "Cheapest route in road networks",
+    "Minimum cost network flow",
+    "Resource-optimal planning"
+  ],
+  "tags": ["search", "pathfinding", "shortest-path", "weighted", "optimal", "graph"],
+  "difficulty": "intermediate",
+  "python_module": "problemsolving.search.ucs",
+  "embedding_text": "UCS uniform cost search finds cheapest cost path in weighted graphs. Expands least-cost node first using priority queue. Guarantees optimal path with non-negative edge weights. Use when costs vary and no heuristic available."
+}

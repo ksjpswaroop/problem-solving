@@ -1,0 +1,42 @@
+{
+  "id": "greedy",
+  "name": "Greedy Best-First Search",
+  "category": "search",
+  "subcategory": "informed_search",
+  "description": "Expands the node that appears closest to goal by heuristic alone. Fast but not optimal.",
+  "when_to_use": [
+    "When speed matters more than optimality",
+    "Real-time pathfinding where quick response is needed",
+    "Heuristic is highly accurate and near-optimal paths are acceptable",
+    "Very large search spaces where A* is too slow"
+  ],
+  "when_not_to_use": [
+    "When optimal path is required (use A* instead)",
+    "When heuristic is poor or misleading",
+    "Safety-critical applications requiring guaranteed optimal solutions"
+  ],
+  "complexity": {
+    "time": "O(b^m) worst case, often much better with good heuristic",
+    "space": "O(b^m) — stores generated nodes"
+  },
+  "parameters": [
+    {"name": "start", "type": "State", "description": "Initial state/node", "required": true},
+    {"name": "goal_test", "type": "Callable", "description": "Returns true if state is the goal", "required": true},
+    {"name": "neighbors", "type": "Callable", "description": "Returns list of (neighbor, cost) tuples", "required": true},
+    {"name": "heuristic", "type": "Callable", "description": "Estimated cost/distance to goal", "required": true}
+  ],
+  "returns": {
+    "type": "SearchResult",
+    "fields": ["path", "nodes_explored"]
+  },
+  "related_algorithms": ["astar", "ucs", "bfs"],
+  "use_cases": [
+    "Real-time game AI pathfinding",
+    "Approximate navigation",
+    "Quick exploratory search in large spaces"
+  ],
+  "tags": ["search", "pathfinding", "heuristic", "informed", "fast", "non-optimal"],
+  "difficulty": "intermediate",
+  "python_module": "problemsolving.search.greedy",
+  "embedding_text": "Greedy best-first search expands node closest to goal by heuristic alone. Fast but not optimal. Use when speed matters more than finding the cheapest path. Good for real-time pathfinding in large spaces."
+}

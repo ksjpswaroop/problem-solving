@@ -1,0 +1,44 @@
+{
+  "id": "dfs",
+  "name": "Depth-First Search",
+  "category": "search",
+  "subcategory": "uninformed_search",
+  "description": "Explores as deep as possible before backtracking. Memory-efficient but does not guarantee shortest path.",
+  "when_to_use": [
+    "When any path to goal suffices (not necessarily shortest)",
+    "Memory-constrained environments (only stores current path)",
+    "Topological sorting of directed acyclic graphs",
+    "Cycle detection in graphs",
+    "Solving puzzles with deep solution trees (e.g. Sudoku backtracking)"
+  ],
+  "when_not_to_use": [
+    "When shortest path is required (use BFS instead)",
+    "Very deep or infinite graphs without depth limit (may not terminate)",
+    "When optimal cost matters (use UCS or A* instead)"
+  ],
+  "complexity": {
+    "time": "O(V + E) where V = vertices, E = edges",
+    "space": "O(V) — proportional to maximum depth"
+  },
+  "parameters": [
+    {"name": "start", "type": "State", "description": "Initial state/node", "required": true},
+    {"name": "goal_test", "type": "Callable", "description": "Returns true if state is the goal", "required": true},
+    {"name": "neighbors", "type": "Callable", "description": "Returns adjacent states for a given state", "required": true},
+    {"name": "max_depth", "type": "int | None", "description": "Optional depth limit", "required": false}
+  ],
+  "returns": {
+    "type": "SearchResult",
+    "fields": ["path", "nodes_explored"]
+  },
+  "related_algorithms": ["bfs", "ids", "astar"],
+  "use_cases": [
+    "Maze generation",
+    "Topological sort",
+    "Cycle detection",
+    "Backtracking constraint satisfaction"
+  ],
+  "tags": ["search", "pathfinding", "graph", "uninformed", "backtracking"],
+  "difficulty": "beginner",
+  "python_module": "problemsolving.search.dfs",
+  "embedding_text": "DFS depth-first search explores deep before backtracking. Memory efficient O(depth) space. Does not guarantee shortest path. Use when any path suffices or memory is limited. Supports depth limiting."
+}
