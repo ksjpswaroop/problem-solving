@@ -104,3 +104,20 @@ def _register_builtin_engines(registry: EngineRegistry) -> None:
     registry.register(
         "greedy", solve_fn=greedy_solve_from_dict, tags=["search", "pathfinding", "heuristic"]
     )
+
+    # Optimization engines
+    from problemsolving.optimization.genetic import ga_solve_from_dict
+    from problemsolving.optimization.gradient_descent import gd_solve_from_dict
+    from problemsolving.optimization.simulated_annealing import sa_solve_from_dict
+
+    registry.register(
+        "gradient_descent", solve_fn=gd_solve_from_dict, tags=["optimization", "gradient"]
+    )
+    registry.register(
+        "genetic_algorithm", solve_fn=ga_solve_from_dict, tags=["optimization", "evolutionary"]
+    )
+    registry.register(
+        "simulated_annealing",
+        solve_fn=sa_solve_from_dict,
+        tags=["optimization", "metaheuristic"],
+    )
