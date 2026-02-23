@@ -786,4 +786,4 @@ def get_default_registry() -> EngineRegistry  # Lazily creates + registers built
 
 **Registered engines (default):**
 
-`bfs`, `dfs`, `ucs`, `astar`, `greedy`, `gradient_descent`, `genetic_algorithm`, `simulated_annealing`, `dpll_sat`, `csp_backtracking`, `cas`, `smt_lite`
+`bfs`, `dfs`, `ucs`, `astar`, `greedy`, `gradient_descent`, `genetic_algorithm`, `simulated_annealing`, `dpll_sat`, `csp_backtracking`, `cas`, `smt_lite`, `prolog_lite`, `rule_engine`
