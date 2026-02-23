@@ -1,0 +1,48 @@
+{
+  "id": "genetic_algorithm",
+  "name": "Genetic Algorithm",
+  "category": "optimization",
+  "subcategory": "evolutionary",
+  "description": "Population-based metaheuristic that evolves solutions through selection, crossover, and mutation inspired by natural evolution",
+  "when_to_use": [
+    "Non-differentiable or discrete optimization problems",
+    "When the search space is large and unstructured",
+    "Combinatorial optimization (TSP, scheduling, knapsack variants)",
+    "Multi-objective optimization where Pareto frontiers are sought"
+  ],
+  "when_not_to_use": [
+    "Small continuous problems where gradient descent is faster",
+    "When function evaluations are very expensive (many generations needed)",
+    "Problems with tight time constraints",
+    "When analytical solutions exist or problem is convex"
+  ],
+  "complexity": {
+    "time": "O(generations * population_size * fitness_evaluation_cost)",
+    "space": "O(population_size * solution_dimension)"
+  },
+  "parameters": [
+    {"name": "fitness_function", "type": "Callable", "description": "Evaluates quality of each solution", "required": true},
+    {"name": "population_size", "type": "int", "description": "Number of individuals per generation", "required": true},
+    {"name": "crossover_rate", "type": "float", "description": "Probability of crossover [0,1]", "required": false},
+    {"name": "mutation_rate", "type": "float", "description": "Probability of mutation [0,1]", "required": false},
+    {"name": "max_generations", "type": "int", "description": "Maximum evolution cycles", "required": true},
+    {"name": "selection_method", "type": "str", "description": "roulette_wheel, tournament, or elitism", "required": false}
+  ],
+  "returns": {
+    "type": "EvolutionResult",
+    "fields": ["best_solution", "best_fitness", "fitness_history", "final_population"]
+  },
+  "related_algorithms": ["particle_swarm_optimization", "simulated_annealing", "differential_evolution"],
+  "use_cases": [
+    "Traveling salesman problem (TSP) solutions",
+    "Vehicle routing and scheduling",
+    "Neural architecture search (NAS)",
+    "Portfolio optimization",
+    "Game AI and strategy evolution",
+    "Feature selection in machine learning"
+  ],
+  "tags": ["optimization", "evolutionary", "metaheuristic", "population_based", "discrete", "non_differentiable"],
+  "difficulty": "intermediate",
+  "python_module": "problemsolving.optimization.genetic",
+  "embedding_text": "Genetic algorithms mimic natural evolution to solve optimization problems. Maintains population of candidate solutions, applies selection pressure on fitness, performs crossover to combine solutions, and mutation for exploration. No gradients needed. Works well on discrete, combinatorial, and multimodal problems. Requires many fitness evaluations."
+}

@@ -143,3 +143,18 @@ def _register_builtin_engines(registry: EngineRegistry) -> None:
         solve_fn=smt_solve_from_dict,
         tags=["smt", "arithmetic", "constraint"],
     )
+
+    # Logic engines
+    from problemsolving.logic.prolog_lite import prolog_solve_from_dict
+    from problemsolving.logic.rule_engine import rule_engine_solve_from_dict
+
+    registry.register(
+        "prolog_lite",
+        solve_fn=prolog_solve_from_dict,
+        tags=["logic", "symbolic"],
+    )
+    registry.register(
+        "rule_engine",
+        solve_fn=rule_engine_solve_from_dict,
+        tags=["logic", "rule_based"],
+    )

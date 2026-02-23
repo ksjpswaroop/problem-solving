@@ -1,0 +1,126 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://problemsolving.dev/schemas/engines/symbolic.schema.json",
+  "title": "Symbolic Engine Schemas",
+  "$defs": {
+    "CASInput": {
+      "type": "object",
+      "description": "Input for CAS engine. The 'operation' field determines which sub-function is called.",
+      "properties": {
+        "operation": {
+          "type": "string",
+          "enum": ["solve", "solve_system", "differentiate", "integrate", "simplify"],
+          "default": "solve"
+        },
+        "equation": {
+          "type": "string",
+          "description": "Expression equal to zero (for 'solve' operation).",
+          "examples": ["x**2 - 5*x + 6"]
+        },
+        "variable": {
+          "type": "string",
+          "description": "Variable name (for solve, differentiate, integrate).",
+          "examples": ["x"]
+        },
+        "domain": {
+          "type": "string",
+          "enum": ["complex", "real"],
+          "default": "complex",
+          "description": "Solution domain (for 'solve' operation)."
+        },
+        "equations": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "List of expressions equal to zero (for 'solve_system')."
+        },
+        "variables": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "List of variable names (for 'solve_system')."
+        },
+        "expression": {
+          "type": "string",
+          "description": "Symbolic expression (for differentiate, integrate, simplify)."
+        }
+      },
+      "required": ["operation"]
+    },
+    "CASSolveResult": {
+      "type": "object",
+      "properties": {
+        "solutions": {
+          "type": "array",
+          "items": { "type": "number" },
+          "description": "List of numeric solutions."
+        },
+        "variable": { "type": "string" }
+      },
+      "required": ["solutions", "variable"]
+    },
+    "CASSolveSystemResult": {
+      "type": "object",
+      "properties": {
+        "solution": {
+          "type": "object",
+          "additionalProperties": { "type": "number" },
+          "description": "Variable-to-value mapping."
+        },
+        "solvable": { "type": "boolean" }
+      },
+      "required": ["solution", "solvable"]
+    },
+    "CASDerivativeResult": {
+      "type": "object",
+      "properties": {
+        "derivative": { "type": "string" },
+        "variable": { "type": "string" }
+      },
+      "required": ["derivative", "variable"]
+    },
+    "CASIntegralResult": {
+      "type": "object",
+      "properties": {
+        "integral": { "type": "string" },
+        "variable": { "type": "string" }
+      },
+      "required": ["integral", "variable"]
+    },
+    "CASSimplifyResult": {
+      "type": "object",
+      "properties": {
+        "simplified": { "type": "string" }
+      },
+      "required": ["simplified"]
+    },
+    "SMTLiteInput": {
+      "type": "object",
+      "description": "Input for SMT-Lite solver.",
+      "properties": {
+        "variables": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "List of integer variable names."
+        },
+        "constraints": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "List of constraint strings. Supports ==, >, <, >=, <= over integers.",
+          "examples": [["x > 0", "x + y == 10", "x < 100"]]
+        }
+      },
+      "required": ["variables", "constraints"]
+    },
+    "SMTLiteResult": {
+      "type": "object",
+      "properties": {
+        "satisfiable": { "type": "boolean" },
+        "assignment": {
+          "type": "object",
+          "additionalProperties": { "type": "integer" },
+          "description": "Variable-to-integer mapping."
+        }
+      },
+      "required": ["satisfiable", "assignment"]
+    }
+  }
+}

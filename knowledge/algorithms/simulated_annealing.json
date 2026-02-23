@@ -1,0 +1,48 @@
+{
+  "id": "simulated_annealing",
+  "name": "Simulated Annealing",
+  "category": "optimization",
+  "subcategory": "metaheuristic",
+  "description": "Probabilistic technique that emulates the cooling of metals to escape local minima and find near-optimal solutions",
+  "when_to_use": [
+    "Discrete optimization with many local minima",
+    "When you need to escape local optima probabilistically",
+    "Problems like TSP, graph partitioning, or scheduling",
+    "When solution quality matters more than computation time"
+  ],
+  "when_not_to_use": [
+    "Continuous differentiable problems (use gradient descent)",
+    "When tight time bounds are required (slow convergence)",
+    "Very high-dimensional spaces (curse of dimensionality)",
+    "When you need guaranteed optimality"
+  ],
+  "complexity": {
+    "time": "O(iterations * neighbor_generation_cost), highly dependent on cooling schedule",
+    "space": "O(solution_dimension) for current and best solutions"
+  },
+  "parameters": [
+    {"name": "objective_function", "type": "Callable", "description": "Cost function to minimize", "required": true},
+    {"name": "neighbor_function", "type": "Callable", "description": "Generates neighboring solutions", "required": true},
+    {"name": "initial_solution", "type": "Any", "description": "Starting candidate solution", "required": true},
+    {"name": "initial_temperature", "type": "float", "description": "Starting acceptance probability control", "required": true},
+    {"name": "cooling_rate", "type": "float", "description": "Temperature reduction factor per iteration", "required": true},
+    {"name": "min_temperature", "type": "float", "description": "Stopping temperature threshold", "required": false}
+  ],
+  "returns": {
+    "type": "AnnealingResult",
+    "fields": ["best_solution", "best_cost", "temperature_history", "acceptance_history"]
+  },
+  "related_algorithms": ["genetic_algorithm", "particle_swarm_optimization", "tabu_search"],
+  "use_cases": [
+    "Traveling salesman problem optimization",
+    "Circuit and chip design (VLSI placement)",
+    "Job scheduling and resource allocation",
+    "Graph coloring problems",
+    "Image restoration and processing",
+    "Protein folding simulations"
+  ],
+  "tags": ["optimization", "metaheuristic", "probabilistic", "discrete", "local_search", "annealing"],
+  "difficulty": "intermediate",
+  "python_module": "problemsolving.optimization.simulated_annealing",
+  "embedding_text": "Simulated annealing is a stochastic optimization technique inspired by metallurgical annealing. Accepts worse solutions with probability exp(-ΔE/T) where T decreases over time. High temperature allows exploration, low temperature favors exploitation. Effective for combinatorial optimization and escaping local minima through controlled randomness."
+}

@@ -1,0 +1,139 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://problemsolving.dev/schemas/engines/search.schema.json",
+  "title": "Search Engine Schemas",
+  "description": "Input and output schemas for all search engines.",
+  "$defs": {
+    "BFSInput": {
+      "type": "object",
+      "description": "Input for BFS (Breadth-First Search).",
+      "properties": {
+        "graph": {
+          "type": "object",
+          "description": "Adjacency list. Keys are node names, values are arrays of neighbor names.",
+          "additionalProperties": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        },
+        "start": {
+          "type": "string",
+          "description": "Start node name."
+        },
+        "goal": {
+          "type": "string",
+          "description": "Goal node name."
+        }
+      },
+      "required": ["graph", "start", "goal"]
+    },
+    "DFSInput": {
+      "type": "object",
+      "description": "Input for DFS (Depth-First Search).",
+      "properties": {
+        "graph": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        },
+        "start": { "type": "string" },
+        "goal": { "type": "string" },
+        "max_depth": {
+          "type": ["integer", "null"],
+          "description": "Optional maximum depth limit.",
+          "minimum": 0
+        }
+      },
+      "required": ["graph", "start", "goal"]
+    },
+    "UCSInput": {
+      "type": "object",
+      "description": "Input for UCS (Uniform Cost Search).",
+      "properties": {
+        "graph": {
+          "type": "object",
+          "description": "Adjacency list with costs. Values are arrays of [neighbor, cost] pairs.",
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "type": "array",
+              "prefixItems": [
+                { "type": "string" },
+                { "type": "number", "minimum": 0 }
+              ],
+              "minItems": 2,
+              "maxItems": 2
+            }
+          }
+        },
+        "start": { "type": "string" },
+        "goal": { "type": "string" }
+      },
+      "required": ["graph", "start", "goal"]
+    },
+    "AStarInput": {
+      "type": "object",
+      "description": "Input for A* Search.",
+      "properties": {
+        "graph": {
+          "type": "object",
+          "description": "Weighted adjacency list (same format as UCS).",
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "type": "array",
+              "prefixItems": [
+                { "type": "string" },
+                { "type": "number", "minimum": 0 }
+              ]
+            }
+          }
+        },
+        "start": { "type": "string" },
+        "goal": { "type": "string" },
+        "heuristic": {
+          "type": "object",
+          "description": "Map of node name to heuristic value (estimated cost to goal).",
+          "additionalProperties": { "type": "number" }
+        }
+      },
+      "required": ["graph", "start", "goal"]
+    },
+    "GreedyInput": {
+      "description": "Input for Greedy Best-First Search. Same schema as A*.",
+      "$ref": "#/$defs/AStarInput"
+    },
+    "SearchResult": {
+      "type": "object",
+      "description": "Common search result structure.",
+      "properties": {
+        "path": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Ordered sequence of nodes from start to goal."
+        },
+        "cost": {
+          "type": "number",
+          "description": "Total path cost (UCS, A* only)."
+        },
+        "nodes_explored": {
+          "type": "integer",
+          "description": "Number of nodes expanded during search.",
+          "minimum": 0
+        }
+      },
+      "required": ["path", "nodes_explored"]
+    },
+    "NoPathResult": {
+      "type": "object",
+      "properties": {
+        "status": { "type": "string", "const": "no_path" },
+        "path": { "type": "array", "maxItems": 0 },
+        "nodes_explored": { "type": "integer" }
+      },
+      "required": ["status", "path"]
+    }
+  }
+}

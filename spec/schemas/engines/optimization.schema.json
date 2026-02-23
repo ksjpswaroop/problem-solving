@@ -1,0 +1,155 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://problemsolving.dev/schemas/engines/optimization.schema.json",
+  "title": "Optimization Engine Schemas",
+  "$defs": {
+    "GradientDescentInput": {
+      "type": "object",
+      "description": "Protocol input for Gradient Descent. Defines a quadratic objective via coefficients.",
+      "properties": {
+        "coefficients": {
+          "type": "array",
+          "items": { "type": "number" },
+          "description": "Coefficient for each dimension."
+        },
+        "offsets": {
+          "type": "array",
+          "items": { "type": "number" },
+          "description": "Target offset for each dimension. Objective = sum(c_i * (x_i - offset_i)^2)."
+        },
+        "initial": {
+          "type": "array",
+          "items": { "type": "number" },
+          "description": "Starting point."
+        },
+        "learning_rate": {
+          "type": "number",
+          "description": "Step size multiplier.",
+          "default": 0.01,
+          "exclusiveMinimum": 0
+        },
+        "max_iterations": {
+          "type": "integer",
+          "description": "Maximum number of iterations.",
+          "default": 1000,
+          "minimum": 1
+        }
+      },
+      "required": ["coefficients", "offsets"]
+    },
+    "GradientDescentResult": {
+      "type": "object",
+      "properties": {
+        "solution": {
+          "type": "array",
+          "items": { "type": "number" },
+          "description": "Optimized parameter values."
+        },
+        "objective_value": {
+          "type": "number",
+          "description": "Objective function value at solution."
+        },
+        "iterations": {
+          "type": "integer",
+          "description": "Number of iterations performed."
+        }
+      },
+      "required": ["solution", "objective_value", "iterations"]
+    },
+    "GeneticAlgorithmInput": {
+      "type": "object",
+      "properties": {
+        "bounds": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "prefixItems": [
+              { "type": "number" },
+              { "type": "number" }
+            ],
+            "minItems": 2,
+            "maxItems": 2
+          },
+          "description": "Per-dimension [min, max] bounds."
+        },
+        "target": {
+          "type": "array",
+          "items": { "type": "number" },
+          "description": "Target point. Fitness = -distance_to_target."
+        },
+        "population_size": {
+          "type": "integer",
+          "default": 50,
+          "minimum": 2
+        },
+        "generations": {
+          "type": "integer",
+          "default": 100,
+          "minimum": 1
+        }
+      },
+      "required": ["bounds"]
+    },
+    "GeneticAlgorithmResult": {
+      "type": "object",
+      "properties": {
+        "solution": {
+          "type": "array",
+          "items": { "type": "number" }
+        },
+        "fitness": { "type": "number" },
+        "generations": { "type": "integer" }
+      },
+      "required": ["solution", "fitness", "generations"]
+    },
+    "SimulatedAnnealingInput": {
+      "type": "object",
+      "properties": {
+        "initial": {
+          "type": "array",
+          "items": { "type": "number" },
+          "description": "Starting point."
+        },
+        "target": {
+          "type": "array",
+          "items": { "type": "number" },
+          "description": "Target point. Objective = distance_to_target."
+        },
+        "step_size": {
+          "type": "number",
+          "default": 0.5,
+          "description": "Gaussian step size for neighbor generation."
+        },
+        "temperature": {
+          "type": "number",
+          "default": 100.0,
+          "exclusiveMinimum": 0
+        },
+        "cooling_rate": {
+          "type": "number",
+          "default": 0.995,
+          "exclusiveMinimum": 0,
+          "exclusiveMaximum": 1
+        },
+        "max_iterations": {
+          "type": "integer",
+          "default": 10000,
+          "minimum": 1
+        }
+      },
+      "required": ["initial"]
+    },
+    "SimulatedAnnealingResult": {
+      "type": "object",
+      "properties": {
+        "solution": {
+          "type": "array",
+          "items": { "type": "number" }
+        },
+        "objective_value": { "type": "number" },
+        "iterations": { "type": "integer" }
+      },
+      "required": ["solution", "objective_value", "iterations"]
+    }
+  }
+}

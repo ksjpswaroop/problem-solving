@@ -1,0 +1,166 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://problemsolving.dev/schemas/mcp_tools.schema.json",
+  "title": "MCP Tool Schemas",
+  "description": "Input and output schemas for all MCP server tools.",
+  "$defs": {
+    "SolveToolInput": {
+      "type": "object",
+      "properties": {
+        "engine": {
+          "type": "string",
+          "description": "Engine name or 'auto' for automatic selection."
+        },
+        "input": {
+          "type": "object",
+          "description": "Engine-specific input data."
+        },
+        "problem_type": {
+          "type": "string",
+          "description": "Problem type for auto-selection (required when engine='auto')."
+        },
+        "features": {
+          "type": "object",
+          "description": "Problem features for auto-selection."
+        }
+      },
+      "required": ["engine", "input"]
+    },
+    "SelectAlgorithmInput": {
+      "type": "object",
+      "properties": {
+        "problem_type": {
+          "type": "string",
+          "description": "Problem category.",
+          "enum": [
+            "pathfinding", "satisfiability", "constraint_satisfaction",
+            "optimization", "symbolic_math", "arithmetic_constraints",
+            "logic_programming", "rule_based"
+          ]
+        },
+        "features": {
+          "type": "object",
+          "description": "Problem characteristics for algorithm selection.",
+          "properties": {
+            "weighted": { "type": "boolean" },
+            "has_heuristic": { "type": "boolean" },
+            "needs_optimal": { "type": "boolean" },
+            "differentiable": { "type": "boolean" },
+            "discrete": { "type": "boolean" },
+            "domain": { "type": "string", "enum": ["boolean", "integer", "real"] }
+          }
+        }
+      },
+      "required": ["problem_type"]
+    },
+    "SelectAlgorithmResult": {
+      "type": "object",
+      "properties": {
+        "algorithm": {
+          "type": "string",
+          "description": "Recommended engine name."
+        },
+        "reasoning": {
+          "type": "string",
+          "description": "Why this algorithm was selected."
+        },
+        "alternatives": {
+          "type": "array",
+          "items": { "type": "string" },
+          "maxItems": 3,
+          "description": "Up to 3 alternative engines."
+        }
+      },
+      "required": ["algorithm", "reasoning", "alternatives"]
+    },
+    "ListEnginesInput": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "type": "string",
+          "description": "Optional tag to filter engines."
+        }
+      }
+    },
+    "ListEnginesResult": {
+      "type": "object",
+      "properties": {
+        "engines": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      },
+      "required": ["engines"]
+    },
+    "VerifyToolInput": {
+      "type": "object",
+      "properties": {
+        "engine": { "type": "string" },
+        "input": { "type": "object" },
+        "expected": {
+          "type": "object",
+          "description": "Expected result fields to compare against."
+        }
+      },
+      "required": ["engine", "input", "expected"]
+    },
+    "VerifyToolResult": {
+      "type": "object",
+      "properties": {
+        "verified": {
+          "type": "boolean",
+          "description": "True if all expected fields match actual output."
+        },
+        "mismatches": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "List of field mismatches (empty if verified=true)."
+        },
+        "actual": {
+          "type": "object",
+          "description": "The engine's actual output."
+        }
+      },
+      "required": ["verified"]
+    },
+    "ExplainAlgorithmInput": {
+      "type": "object",
+      "properties": {
+        "algorithm": {
+          "type": "string",
+          "description": "Algorithm ID to look up."
+        }
+      },
+      "required": ["algorithm"]
+    },
+    "ExplainAlgorithmResult": {
+      "type": "object",
+      "properties": {
+        "found": { "type": "boolean" },
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "when_to_use": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "when_not_to_use": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "complexity": {
+          "type": "object",
+          "properties": {
+            "time": { "type": "string" },
+            "space": { "type": "string" }
+          }
+        },
+        "tags": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      },
+      "required": ["found"]
+    }
+  }
+}

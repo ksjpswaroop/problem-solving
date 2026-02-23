@@ -1,0 +1,159 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://problemsolving.dev/schemas/engines/logic.schema.json",
+  "title": "Logic Engine Schemas",
+  "$defs": {
+    "PrologInput": {
+      "type": "object",
+      "description": "Input for Prolog-Lite engine.",
+      "properties": {
+        "facts": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "predicate": { "type": "string" },
+              "args": {
+                "type": "array",
+                "items": { "type": "string" }
+              }
+            },
+            "required": ["predicate", "args"]
+          },
+          "description": "List of ground facts."
+        },
+        "rules": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "head_predicate": { "type": "string" },
+              "head_args": {
+                "type": "array",
+                "items": { "type": "string" },
+                "description": "Variables start with '?'."
+              },
+              "body": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "predicate": { "type": "string" },
+                    "args": {
+                      "type": "array",
+                      "items": { "type": "string" }
+                    }
+                  },
+                  "required": ["predicate", "args"]
+                }
+              }
+            },
+            "required": ["head_predicate", "head_args", "body"]
+          },
+          "description": "List of rules (head :- body)."
+        },
+        "query": {
+          "type": "object",
+          "properties": {
+            "predicate": { "type": "string" },
+            "args": {
+              "type": "array",
+              "items": { "type": "string" },
+              "description": "Variables start with '?'. Ground terms are literal values."
+            }
+          },
+          "required": ["predicate", "args"],
+          "description": "Query to evaluate against facts and rules."
+        }
+      },
+      "required": ["query"]
+    },
+    "PrologResult": {
+      "type": "object",
+      "properties": {
+        "results": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": { "type": "string" },
+            "description": "Variable binding. Keys are variable names (without '?')."
+          }
+        },
+        "count": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of matching bindings."
+        }
+      },
+      "required": ["results", "count"]
+    },
+    "RuleEngineInput": {
+      "type": "object",
+      "description": "Input for forward-chaining Rule Engine.",
+      "properties": {
+        "facts": {
+          "type": "object",
+          "description": "Initial working memory. Keys are fact names, values are any type."
+        },
+        "rules": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Rule name for trace identification."
+              },
+              "if_fact": {
+                "type": "string",
+                "description": "Fact key to check."
+              },
+              "threshold": {
+                "type": "number",
+                "description": "Condition: if fact value > threshold."
+              },
+              "then_set": {
+                "type": "string",
+                "description": "Fact key to set when rule fires."
+              },
+              "then_value": {
+                "description": "Value to set in working memory."
+              }
+            },
+            "required": ["name", "if_fact", "threshold", "then_set"]
+          },
+          "description": "List of threshold-based rules (protocol adapter only supports this form)."
+        }
+      },
+      "required": ["facts"]
+    },
+    "RuleEngineResult": {
+      "type": "object",
+      "properties": {
+        "facts": {
+          "type": "object",
+          "description": "Final working memory state after all rules have fired."
+        },
+        "rules_fired": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Names of rules that fired, in order."
+        },
+        "trace": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "rule": { "type": "string" },
+              "facts_before": { "type": "object" },
+              "facts_after": { "type": "object" }
+            },
+            "required": ["rule", "facts_before", "facts_after"]
+          },
+          "description": "Detailed trace with before/after snapshots."
+        }
+      },
+      "required": ["facts", "rules_fired", "trace"]
+    }
+  }
+}

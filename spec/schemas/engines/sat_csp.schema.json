@@ -1,0 +1,94 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://problemsolving.dev/schemas/engines/sat_csp.schema.json",
+  "title": "SAT & CSP Engine Schemas",
+  "$defs": {
+    "DPLLInput": {
+      "type": "object",
+      "description": "Input for DPLL SAT solver. Clauses in CNF form.",
+      "properties": {
+        "clauses": {
+          "type": "array",
+          "description": "List of clauses. Each clause is a list of literals (positive = true, negative = false).",
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "description": "Literal. Variable index (1-based). Negative means negated."
+            },
+            "minItems": 0
+          },
+          "examples": [[[1, 2], [-1, 3]]]
+        },
+        "num_vars": {
+          "type": "integer",
+          "description": "Number of variables (1-indexed).",
+          "minimum": 0
+        }
+      },
+      "required": ["clauses", "num_vars"]
+    },
+    "DPLLResult": {
+      "type": "object",
+      "properties": {
+        "satisfiable": {
+          "type": "boolean",
+          "description": "Whether a satisfying assignment exists."
+        },
+        "assignment": {
+          "type": "object",
+          "description": "Variable-to-boolean mapping. Keys are string-encoded variable indices.",
+          "additionalProperties": { "type": "boolean" }
+        }
+      },
+      "required": ["satisfiable", "assignment"]
+    },
+    "CSPInput": {
+      "type": "object",
+      "description": "Input for CSP backtracking solver.",
+      "properties": {
+        "variables": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "List of variable names."
+        },
+        "domains": {
+          "type": "object",
+          "description": "Map of variable name to list of possible values.",
+          "additionalProperties": {
+            "type": "array"
+          }
+        },
+        "not_equal_constraints": {
+          "type": "array",
+          "description": "List of [var1, var2] pairs that must have different values.",
+          "items": {
+            "type": "array",
+            "prefixItems": [
+              { "type": "string" },
+              { "type": "string" }
+            ],
+            "minItems": 2,
+            "maxItems": 2
+          }
+        }
+      },
+      "required": ["variables", "domains"]
+    },
+    "CSPResult": {
+      "type": "object",
+      "properties": {
+        "satisfiable": { "type": "boolean" },
+        "assignment": {
+          "type": "object",
+          "description": "Variable-to-value mapping."
+        },
+        "nodes_explored": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": ["satisfiable", "assignment", "nodes_explored"]
+    }
+  }
+}

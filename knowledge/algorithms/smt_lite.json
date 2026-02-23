@@ -1,0 +1,48 @@
+{
+  "id": "smt_lite",
+  "name": "SMT-Lite Integer Constraint Solver",
+  "category": "symbolic",
+  "subcategory": "smt",
+  "description": "Solves Satisfiability Modulo Theories constraints combining boolean logic with integer linear arithmetic",
+  "when_to_use": [
+    "Integer linear programming with boolean constraints",
+    "Program verification with integer variables and assertions",
+    "Scheduling with integer time slots and constraints",
+    "Bounded model checking of software",
+    "Hardware verification with bit-vectors and integer logic"
+  ],
+  "when_not_to_use": [
+    "Pure SAT problems without arithmetic (use DPLL SAT)",
+    "Nonlinear integer problems (NP-hard, may be unsolvable)",
+    "Large continuous domains (use linear programming)",
+    "Problems requiring symbolic reasoning beyond integer arithmetic"
+  ],
+  "complexity": {
+    "time": "NP-hard for full SMT(LIA); depends on theory and formula structure",
+    "space": "O(variables + constraints) for maintaining solver state"
+  },
+  "parameters": [
+    {"name": "variables", "type": "Dict[str, Domain]", "description": "Integer variables with domain bounds", "required": true},
+    {"name": "constraints", "type": "List[Constraint]", "description": "Linear arithmetic and boolean constraints", "required": true},
+    {"name": "objective", "type": "Expr", "description": "Optional: minimize or maximize objective function", "required": false},
+    {"name": "timeout", "type": "float", "description": "Maximum solving time in seconds", "required": false},
+    {"name": "theory", "type": "str", "description": "LIA (Linear Integer Arithmetic) or QF_BV (Quantifier-free Bit-Vector)", "required": false}
+  ],
+  "returns": {
+    "type": "SMTResult",
+    "fields": ["satisfiable", "assignment", "proof_of_unsatisfiability", "solving_time"]
+  },
+  "related_algorithms": ["dpll_sat", "csp_backtracking", "branch_and_bound"],
+  "use_cases": [
+    "Software model checking and verification",
+    "Test case generation for program paths",
+    "Bounded program analysis",
+    "Integer linear program solving",
+    "Combinatorial optimization with constraints",
+    "Cryptographic protocol verification"
+  ],
+  "tags": ["symbolic", "smt", "satisfiability", "integer_arithmetic", "verification", "constraints"],
+  "difficulty": "advanced",
+  "python_module": "problemsolving.symbolic.smt_lite",
+  "embedding_text": "SMT solvers decide satisfiability of formulas in Satisfiability Modulo Theories. SMT(LIA) handles linear integer arithmetic over booleans. Combines SAT solving with theory-specific decision procedures. Key component of formal verification tools. Handles assertions like (x > 5 AND y <= 2x) AND (flag OR NOT constraint). Exponential worst-case but effective with heuristics."
+}

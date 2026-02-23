@@ -1,0 +1,47 @@
+{
+  "id": "cas",
+  "name": "Computer Algebra System",
+  "category": "symbolic",
+  "subcategory": "algebra",
+  "description": "Performs symbolic mathematical computations including algebraic manipulation, calculus, and equation solving",
+  "when_to_use": [
+    "Symbolic differentiation and integration",
+    "Solving equations algebraically (polynomials, transcendental)",
+    "Polynomial factorization and simplification",
+    "Matrix operations and linear algebra symbolically",
+    "Mathematical derivation and proof assistance"
+  ],
+  "when_not_to_use": [
+    "Numerical approximations for efficiency (use numeric libraries)",
+    "Real-time computations with tight performance constraints",
+    "Problems requiring only numerical answers at specific points",
+    "Very large symbolic expressions causing memory issues"
+  ],
+  "complexity": {
+    "time": "Highly variable; symbolic operations can be exponential in expression size",
+    "space": "O(expression_size) for expression trees and simplification caches"
+  },
+  "parameters": [
+    {"name": "symbols", "type": "List[Symbol]", "description": "Symbolic variables to use (x, y, z, etc)", "required": true},
+    {"name": "expression", "type": "Expr", "description": "Symbolic mathematical expression", "required": true},
+    {"name": "operation", "type": "str", "description": "differentiate, integrate, simplify, factor, solve, etc", "required": true},
+    {"name": "assumptions", "type": "Dict", "description": "Variable assumptions (positive, real, integer, etc)", "required": false}
+  ],
+  "returns": {
+    "type": "SymbolicResult",
+    "fields": ["result_expression", "steps", "latex_form", "numerical_approximation"]
+  },
+  "related_algorithms": ["smt_lite", "polynomial_gcd", "resultant"],
+  "use_cases": [
+    "Calculus homework and problem verification",
+    "Mathematical research and derivations",
+    "Physics equations and formula manipulation",
+    "Control theory design and analysis",
+    "Chemistry and physics simulations (symbolic setup)",
+    "Engineering calculations and formula derivation"
+  ],
+  "tags": ["symbolic", "algebra", "calculus", "mathematics", "equation_solving", "simplification"],
+  "difficulty": "intermediate",
+  "python_module": "problemsolving.symbolic.cas",
+  "embedding_text": "Computer Algebra System (CAS) handles symbolic mathematical computation. Systems like SymPy provide symbolic differentiation (derivative), integration (integrate), equation solving (solve), and expression simplification. Operates on symbolic expressions preserving mathematical relationships. Useful for exact answers and mathematical proofs rather than numerical approximation."
+}

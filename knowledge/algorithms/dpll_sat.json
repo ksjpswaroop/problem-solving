@@ -1,0 +1,44 @@
+{
+  "id": "dpll_sat",
+  "name": "DPLL SAT Solver",
+  "category": "satisfiability",
+  "subcategory": "boolean_sat",
+  "description": "Davis-Putnam-Logemann-Loveland algorithm for determining satisfiability of boolean formulas in conjunctive normal form",
+  "when_to_use": [
+    "Deciding if a boolean formula in CNF is satisfiable",
+    "SAT-based verification and formal verification",
+    "Constraint satisfaction problems that can be reduced to SAT",
+    "Reasoning tasks in knowledge representation"
+  ],
+  "when_not_to_use": [
+    "Very large SAT instances (NP-complete, exponential worst-case)",
+    "When you need optimal assignments (SAT only answers satisfiability)",
+    "Problems better suited to specialized solvers (CSP, SMT)"
+  ],
+  "complexity": {
+    "time": "O(2^n) worst case for n variables; highly variable with heuristics",
+    "space": "O(n + m) for n variables and m clauses, plus recursion stack"
+  },
+  "parameters": [
+    {"name": "formula", "type": "List[List[int]]", "description": "CNF formula as list of clauses (each clause is list of literals)", "required": true},
+    {"name": "unit_propagation", "type": "bool", "description": "Enable unit clause propagation optimization", "required": false},
+    {"name": "pure_literal_elimination", "type": "bool", "description": "Enable pure literal elimination", "required": false},
+    {"name": "variable_ordering", "type": "str", "description": "Heuristic for variable selection (VSIDS, MOM, etc)", "required": false}
+  ],
+  "returns": {
+    "type": "SATResult",
+    "fields": ["satisfiable", "assignment", "conflicts", "decisions"]
+  },
+  "related_algorithms": ["csp_backtracking", "smt_lite", "resolution"],
+  "use_cases": [
+    "Hardware verification and model checking",
+    "Software verification of critical systems",
+    "Planning and scheduling validation",
+    "Cryptography and constraint analysis",
+    "Electrical circuit design verification"
+  ],
+  "tags": ["satisfiability", "boolean", "sat_solver", "cnf", "formal_verification", "np_complete"],
+  "difficulty": "advanced",
+  "python_module": "problemsolving.csp.sat",
+  "embedding_text": "DPLL is a complete SAT solving algorithm that uses depth-first search with backtracking. Core techniques: unit propagation (eliminate clauses with one unassigned literal), pure literal elimination (assign literals appearing in single polarity), and systematic variable selection. Efficient SAT solvers add clause learning and watched literals. NP-complete problem but highly optimized in practice."
+}

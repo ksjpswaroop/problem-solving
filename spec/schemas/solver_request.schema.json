@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://problemsolving.dev/schemas/solver_request.schema.json",
+  "title": "SolverRequest",
+  "description": "A request to solve a problem via a specific engine.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique request identifier. Auto-generated if not provided.",
+      "pattern": "^req_[a-f0-9]{12}$",
+      "examples": ["req_a1b2c3d4e5f6"]
+    },
+    "engine": {
+      "type": "string",
+      "description": "Target engine name or 'auto' for automatic selection.",
+      "enum": [
+        "auto", "bfs", "dfs", "ucs", "astar", "greedy",
+        "gradient_descent", "genetic_algorithm", "simulated_annealing",
+        "dpll_sat", "csp_backtracking", "cas", "smt_lite",
+        "prolog_lite", "rule_engine"
+      ]
+    },
+    "operation": {
+      "type": "string",
+      "description": "Operation name. Engine-defined.",
+      "default": "solve"
+    },
+    "input": {
+      "type": "object",
+      "description": "Engine-specific input data."
+    },
+    "config": {
+      "type": "object",
+      "description": "Optional configuration overrides.",
+      "default": {}
+    }
+  },
+  "required": ["engine", "input"],
+  "additionalProperties": false
+}

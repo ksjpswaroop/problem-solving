@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://problemsolving.dev/schemas/solver_response.schema.json",
+  "title": "SolverResponse",
+  "description": "Response from a solver engine.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Matches the request ID."
+    },
+    "status": {
+      "type": "string",
+      "enum": ["success", "error"],
+      "description": "Whether the solve succeeded or failed."
+    },
+    "engine": {
+      "type": "string",
+      "description": "Engine that handled the request."
+    },
+    "result": {
+      "type": ["object", "null"],
+      "description": "Engine output on success. Null on error."
+    },
+    "error": {
+      "oneOf": [
+        { "type": "null" },
+        { "$ref": "#/$defs/SolverError" }
+      ],
+      "description": "Error details on failure. Null on success."
+    },
+    "proof_trace": {
+      "type": "array",
+      "items": { "type": "object" },
+      "description": "Optional ordered list of reasoning steps.",
+      "default": []
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Optional timing, stats, engine version info.",
+      "default": {}
+    }
+  },
+  "required": ["id", "status", "engine"],
+  "additionalProperties": false,
+  "$defs": {
+    "SolverError": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "Machine-readable error code.",
+          "enum": ["UNKNOWN_ENGINE", "SOLVER_ERROR", "INVALID_INPUT", "TIMEOUT"]
+        },
+        "message": {
+          "type": "string",
+          "description": "Human-readable error message."
+        },
+        "suggestion": {
+          "type": "string",
+          "description": "Optional suggestion for fixing the error."
+        }
+      },
+      "required": ["code", "message"]
+    }
+  }
+}

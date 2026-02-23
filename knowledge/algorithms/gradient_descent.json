@@ -1,0 +1,47 @@
+{
+  "id": "gradient_descent",
+  "name": "Gradient Descent",
+  "category": "optimization",
+  "subcategory": "gradient_methods",
+  "description": "Iteratively moves toward local minimum by following the negative gradient to minimize a loss function",
+  "when_to_use": [
+    "Minimizing differentiable loss functions in machine learning",
+    "Neural network training and deep learning",
+    "Convex optimization problems with smooth objective functions",
+    "When you need fast convergence with large datasets (batch variants)"
+  ],
+  "when_not_to_use": [
+    "Non-differentiable functions (subgradient methods needed)",
+    "Discrete optimization problems",
+    "When getting stuck in sharp local minima is critical to avoid",
+    "Very small datasets where full gradient computation is inefficient"
+  ],
+  "complexity": {
+    "time": "O(n_iterations * n_features) per iteration; convergence rate O(1/k) for convex functions",
+    "space": "O(n_features) for storing parameters and gradients"
+  },
+  "parameters": [
+    {"name": "objective_function", "type": "Callable", "description": "Function to minimize: f(x)", "required": true},
+    {"name": "gradient_function", "type": "Callable", "description": "Gradient of objective: ∇f(x)", "required": true},
+    {"name": "initial_point", "type": "Array", "description": "Starting parameters x₀", "required": true},
+    {"name": "learning_rate", "type": "float", "description": "Step size α (controls convergence speed)", "required": true},
+    {"name": "max_iterations", "type": "int", "description": "Maximum number of iterations", "required": false},
+    {"name": "tolerance", "type": "float", "description": "Convergence threshold", "required": false}
+  ],
+  "returns": {
+    "type": "OptimizationResult",
+    "fields": ["optimal_parameters", "final_loss", "iterations_run", "convergence_history"]
+  },
+  "related_algorithms": ["stochastic_gradient_descent", "adam_optimizer", "momentum"],
+  "use_cases": [
+    "Training neural networks via backpropagation",
+    "Linear regression and logistic regression",
+    "Deep learning model optimization",
+    "Hyperparameter tuning in machine learning",
+    "Minimizing prediction error in supervised learning"
+  ],
+  "tags": ["optimization", "gradient_methods", "machine_learning", "convex", "differentiable", "training"],
+  "difficulty": "intermediate",
+  "python_module": "problemsolving.optimization.gradient_descent",
+  "embedding_text": "Gradient descent is a first-order optimization method that iteratively minimizes a function by moving in the direction of negative gradient. Core principle: x_{n+1} = x_n - α∇f(x_n). Widely used in machine learning for training models. Variants include batch GD, SGD, and mini-batch GD. Learning rate critically affects convergence."
+}

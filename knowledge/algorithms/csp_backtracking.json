@@ -1,0 +1,48 @@
+{
+  "id": "csp_backtracking",
+  "name": "CSP with Backtracking",
+  "category": "constraint_satisfaction",
+  "subcategory": "backtracking_search",
+  "description": "Solves constraint satisfaction problems by assigning variables and backtracking when constraints are violated",
+  "when_to_use": [
+    "Constraint satisfaction problems (CSP) with finite domains",
+    "Scheduling and timetabling problems",
+    "Map coloring and graph problems",
+    "Puzzle solving (Sudoku, N-Queens, crosswords)",
+    "Resource allocation with constraints"
+  ],
+  "when_not_to_use": [
+    "Very large domains without strong constraint propagation",
+    "When optimal solution with objective function is needed (use branch-and-bound)",
+    "Highly connected constraint graphs without good heuristics",
+    "Continuous domains (use numerical methods instead)"
+  ],
+  "complexity": {
+    "time": "O(d^n) worst case where d = domain size, n = variables; highly dependent on constraint structure",
+    "space": "O(n * d) for variable domains and assignments"
+  },
+  "parameters": [
+    {"name": "variables", "type": "List[str]", "description": "Variable names to assign", "required": true},
+    {"name": "domains", "type": "Dict[str, Set]", "description": "Possible values for each variable", "required": true},
+    {"name": "constraints", "type": "List[Callable]", "description": "Constraint checking functions", "required": true},
+    {"name": "variable_ordering", "type": "str", "description": "MRV, LCV, or static ordering", "required": false},
+    {"name": "inference", "type": "str", "description": "Constraint propagation (forward_checking, arc_consistency)", "required": false}
+  ],
+  "returns": {
+    "type": "CSPResult",
+    "fields": ["assignment", "is_valid", "backtracks", "inference_checks"]
+  },
+  "related_algorithms": ["dpll_sat", "branch_and_bound", "arc_consistency_3"],
+  "use_cases": [
+    "Sudoku solver implementation",
+    "N-Queens problem",
+    "Timetable and course scheduling",
+    "Robot path planning with obstacles",
+    "Map coloring",
+    "Puzzle and logic game solving"
+  ],
+  "tags": ["constraint_satisfaction", "backtracking", "search", "csp", "discrete", "finite_domains"],
+  "difficulty": "intermediate",
+  "python_module": "problemsolving.csp.backtracking",
+  "embedding_text": "Backtracking search for CSPs systematically assigns variable values and backtracks upon constraint violation. Key optimizations: Minimum Remaining Values (MRV) heuristic for variable selection, forward checking for early detection of failures, arc consistency (AC-3) for constraint propagation. Complete algorithm guaranteed to find solution if one exists."
+}
