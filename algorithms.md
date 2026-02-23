@@ -73,7 +73,7 @@ DFS(u, goal):
 
  
 
-1.3 UCS (Uniform Cost Search)
+## 1.3 UCS (Uniform Cost Search)
 
 ### When to use
 	•	Weighted edges with nonnegative costs
@@ -112,7 +112,7 @@ UCS(start, goal):
 
  
 
-1.4 Greedy Best-First Search
+## 1.4 Greedy Best-First Search
 
 ### When to use
 	•	Have heuristic estimate to goal
@@ -150,7 +150,7 @@ GreedyBestFirst(start, goal, h):
 
  
 
-1.5 A* Search
+## 1.5 A* Search
 
 ### When to use
 	•	Weighted pathfinding with a good heuristic
@@ -191,9 +191,9 @@ AStar(start, goal, h):
 
  
 
-2) Optimization
+# 2) Optimization
 
-2.1 Gradient Descent
+## 2.1 Gradient Descent
 
 ### When to use
 	•	Continuous optimization; differentiable objective
