@@ -121,3 +121,12 @@ def _register_builtin_engines(registry: EngineRegistry) -> None:
         solve_fn=sa_solve_from_dict,
         tags=["optimization", "metaheuristic"],
     )
+
+    # CSP / SAT engines
+    from problemsolving.csp.backtracking import csp_solve_from_dict
+    from problemsolving.csp.sat import dpll_solve_from_dict
+
+    registry.register("dpll_sat", solve_fn=dpll_solve_from_dict, tags=["sat", "logic", "csp"])
+    registry.register(
+        "csp_backtracking", solve_fn=csp_solve_from_dict, tags=["csp", "constraint"]
+    )
