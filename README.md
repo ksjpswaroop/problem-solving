@@ -1,5 +1,14 @@
 # Problem Solving Strategies in AI
 
+A universal toolkit of classical AI algorithms and symbolic reasoning engines for agents, LLM applications, finetuning, and optimization.
+
+**Files:**
+- `algorithms.md` — Classical AI algorithms with pseudocode and user flows
+- `symbolic_reasoning.md` — Symbolic engines as Chain-of-Thought replacement (SAT, SMT, Prolog, CAS, KG reasoning, theorem provers)
+- `ARCHITECTURE.md` — System architecture: Rust core, Python/TS SDKs, MCP server, solver protocol
+- `ROADMAP.md` — Plan to turn this into a runnable SDK, knowledge base, training data, and agent integration layer
+- `IMPLEMENTATION_PLAN.md` — Phase-by-phase TDD implementation plan (15 phases, 300+ tests)
+
 ---
 
 ## 1. Search Algorithms
@@ -93,4 +102,30 @@
 - Revise
 - Retain
 - Information Retrieval
+
+---
+
+## 12. Symbolic Reasoning (Chain-of-Thought Replacement)
+
+Formal engines that replace LLM free-form reasoning with provably correct computation. See `symbolic_reasoning.md` for full details.
+
+### Solver Engines
+- SAT Solvers (DPLL, CDCL) — boolean satisfiability
+- SMT Solvers (Z3, CVC5) — satisfiability modulo theories (integers, reals, arrays)
+- Logic Programming (Prolog, miniKanren) — relational/rule-based reasoning
+- Rule Engines (Rete, forward chaining) — production systems, compliance
+
+### Symbolic Math
+- Computer Algebra Systems (SymPy, SageMath) — exact algebraic computation
+
+### Knowledge Reasoning
+- Knowledge Graph Reasoners (OWL, RDFS) — ontology inference
+
+### Formal Verification
+- Theorem Provers (Lean, Coq, Vampire) — machine-checked proofs
+
+### Agent Integration Patterns
+- Tool-based: agent calls symbolic engine as a tool
+- Verification loop: LLM proposes, engine verifies
+- Neurosymbolic: symbolic engine drives, LLM provides heuristics
 
