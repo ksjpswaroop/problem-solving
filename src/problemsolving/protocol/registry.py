@@ -130,3 +130,16 @@ def _register_builtin_engines(registry: EngineRegistry) -> None:
     registry.register(
         "csp_backtracking", solve_fn=csp_solve_from_dict, tags=["csp", "constraint"]
     )
+
+    # Symbolic engines
+    from problemsolving.symbolic.cas import cas_solve_from_dict
+    from problemsolving.symbolic.smt_lite import smt_solve_from_dict
+
+    registry.register(
+        "cas", solve_fn=cas_solve_from_dict, tags=["symbolic", "algebra", "calculus"]
+    )
+    registry.register(
+        "smt_lite",
+        solve_fn=smt_solve_from_dict,
+        tags=["smt", "arithmetic", "constraint"],
+    )
