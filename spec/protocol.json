@@ -1,0 +1,6 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Solver Protocol",
+  "description": "Request/response format for the ProblemSolving solver protocol. To be populated in Phase 1.",
+  "definitions": {}
+}

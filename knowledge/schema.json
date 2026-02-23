@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Algorithm Metadata",
+  "type": "object",
+  "required": ["id", "name", "category", "description", "when_to_use", "complexity", "parameters", "tags"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^[a-z_]+$" },
+    "name": { "type": "string" },
+    "category": {
+      "type": "string",
+      "enum": ["search", "optimization", "csp", "logic", "probabilistic", "ml", "krr", "nlp", "game_theory", "expert_systems", "cbr", "symbolic"]
+    },
+    "subcategory": { "type": "string" },
+    "description": { "type": "string" },
+    "when_to_use": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+    "when_not_to_use": { "type": "array", "items": { "type": "string" } },
+    "complexity": {
+      "type": "object",
+      "properties": {
+        "time": { "type": "string" },
+        "space": { "type": "string" }
+      },
+      "required": ["time", "space"]
+    },
+    "parameters": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "type", "description"],
+        "properties": {
+          "name": { "type": "string" },
+          "type": { "type": "string" },
+          "description": { "type": "string" },
+          "required": { "type": "boolean", "default": true }
+        }
+      }
+    },
+    "returns": {
+      "type": "object",
+      "properties": {
+        "type": { "type": "string" },
+        "fields": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "related_algorithms": { "type": "array", "items": { "type": "string" } },
+    "use_cases": { "type": "array", "items": { "type": "string" } },
+    "tags": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+    "difficulty": { "type": "string", "enum": ["beginner", "intermediate", "advanced"] },
+    "python_module": { "type": "string" },
+    "replaces_cot_for": { "type": "array", "items": { "type": "string" } },
+    "embedding_text": { "type": "string" }
+  }
+}
